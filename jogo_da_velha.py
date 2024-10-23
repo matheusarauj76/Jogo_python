@@ -11,50 +11,65 @@ fonte_quadrinhos = pygame.font.SysFont("Comic Sans Ms", 100) #importar fonte
 running = True # variável de controle de status do jogo
 personagem_x = fonte_quadrinhos.render("X", True, "red")
 personagem_y = fonte_quadrinhos.render("O", True, "green")
-mensagem_final = fonte_quadrinhos.render("Game Over", True, "red")
-cor_fundo = 1
+mensagem_final = fonte_quadrinhos.render("Game Over", True, "red", "black")
+personagem = 0
+
 
 while running:
     # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
+            posicao = pygame.mouse.get_pos()
+            print("Eixo X", posicao[0]) # Eixo X
+            print("Eixo Y", posicao[1]) # Eixo Y
             print("Clicou")
-            cor_fundo = cor_fundo + 1
-            if(cor_fundo > 10):
-                cor_fundo = 1
-    # desenha tabuleiro
-    pygame.draw.line(screen, "white", (200, 0), (200, 600), 10)
-    pygame.draw.line(screen, "white", (400, 0), (400, 600), 10)
-    pygame.draw.line(screen, "white", (0, 200), (600, 200), 10)
-    pygame.draw.line(screen, "white", (0, 400), (600, 400), 10)
+            personagem = personagem + 1
+            if personagem == 10:
+                screen.fill("black")
+                screen.blit(mensagem_final, (50, 200))
+            else:
+                if personagem == 0:
+                    screen.fill()
+                elif posicao[0] <=200 and posicao[1] <200:
+                    screen.blit(personagem_x, (60, 30)) # primeiro
 
+                elif posicao[0] >=200 and posicao[0] <400 and posicao[1] <200:
+                    screen.blit(personagem_y, (260, 30)) # segundo
 
-    if cor_fundo == 1:
-        screen.blit(personagem_x, (75, 50))
-    elif cor_fundo == 2:
-        screen.blit(personagem_y, (250, 50))
-    elif cor_fundo == 3:
-        screen.blit(personagem_x, (450, 50))
-    elif cor_fundo == 4:
-        screen.blit(personagem_y, (75, 230))
-    elif cor_fundo == 5:
-        screen.blit(personagem_x, (250, 230))
-    elif cor_fundo == 6:
-        screen.blit(personagem_y, (440, 230))
-    elif cor_fundo == 7:
-        screen.blit(personagem_x, (75, 420))
-    elif cor_fundo == 8:
-        screen.blit(personagem_y, (250, 420))
-    elif cor_fundo == 9:
-        screen.blit(personagem_x, (450, 420))
-    elif cor_fundo == 10:
-        screen.blit(mensagem_final, (50, 300))
+                elif posicao[0] >400 and posicao[1] <=200:
+                    screen.blit(personagem_x, (460, 30)) # terceiro
 
+                elif posicao[0] <200 and posicao[1] >200 and posicao[1] <400:
+                    screen.blit(personagem_y, (60, 230)) # quarto
+
+                elif posicao[0] >=200 and posicao and posicao[0] <400 and posicao[1] >200 and posicao[1] <400:
+                    screen.blit(personagem_x, (260, 230)) # quinto
+
+                elif posicao[0] >400 and posicao[1] >=200 and posicao[1] <400:
+                    screen.blit(personagem_y, (460, 230)) # sexto
+
+                elif posicao[0] <200 and posicao[1] >=400:
+                    screen.blit(personagem_x, (60, 430)) # sétimo
+
+                elif posicao[0] >=200 and posicao[0] <400 and posicao[1] >=400:
+                    screen.blit(personagem_y, (260, 430)) # oitavo
+
+                elif posicao[0] >=400 and posicao[1] >=400:
+                    screen.blit(personagem_x, (460, 430)) # nono
+
+                if personagem > 10:
+                    personagem = 0
+
+    # desenha tabuleiro    
+    #                                  origem     destino
+    #                                  (x, y)     (x, y)    
+    pygame.draw.line(screen, "white", (200, 0), (200, 600), 1)
+    pygame.draw.line(screen, "white", (400, 0), (400, 600), 1)
+    pygame.draw.line(screen, "white", (0, 200), (600, 200), 1)
+    pygame.draw.line(screen, "white", (0, 400), (600, 400), 1)
 
     pygame.display.flip()
     clock.tick(60)  # limits FPS to 60
-
 pygame.quit()
