@@ -179,7 +179,7 @@ def descobrir_ganhador():
         else:
             screen.blit(ganhador_o_tela, (30, 190))
             status = True
-    # return status
+    return status
 
 while running:
     for event in pygame.event.get():
@@ -192,10 +192,8 @@ while running:
             tabuleiro(espessura, cor_tabuleiro)
             faz_jogada()
             descobrir_ganhador()
-            if (descobrir_ganhador()):
-                rodadas = 9
-
-            if rodadas >= 10:
+            
+            if rodadas >= 9:
                 screen.fill("black")
                 tabuleiro_desenhado = False
                 rodadas = 0
@@ -204,6 +202,9 @@ while running:
                 quadrante = ["", "", "", "", "", "", "", "", ""]
                 cor_tabuleiro = random.choice(cores)
                 tabuleiro(espessura, cor_tabuleiro)
+
+            if (descobrir_ganhador()):
+                rodadas = 9
 
     if tabuleiro_desenhado == False:
         tabuleiro(espessura, cor_tabuleiro)
