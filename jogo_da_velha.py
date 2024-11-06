@@ -16,9 +16,16 @@ running = True # variável de controle de status do jogo
 personagem_x = fonte_quadrinhos.render("X", True, "red")
 personagem_o = fonte_quadrinhos.render("O", True, "blue")
 mensagem_final = fonte_quadrinhos.render("Game Over", True, "red", "black")
+
+# variáveis para desenhar o x e o na tela
+mensagem_x_ganhou = "Jogador X ganhou"
+mensagem_o_ganhou = "Jogador O ganhou"
+fonte_ganhador = pygame.font.SysFont("Arial", 80)
+ganhador_x_tela = fonte_ganhador.render(mensagem_x_ganhou, 1, "red")
+ganhador_o_tela = fonte_ganhador.render(mensagem_o_ganhou, 1, "blue")
+
+# variáveis para definir personagem atual
 jogador_atual = personagem_x
-x_ganhou = "Jogador X venceu"
-o_ganhou = "Jogador O venceu"
 rodadas = 0
 tabuleiro_desenhado = False
 
@@ -27,6 +34,7 @@ coordenada_y = 0
 
 espessura = 1
 cores = ["Red", "Blue", "Green", "Yellow", "Black", "White", "Purple", "Orange", "Pink", "Gray", "Brown", "Cyan", "Magenta", "Gold", "Silver"]
+
 cor_tabuleiro = random.choice(cores)
 quadrante = ["", "", "", "", "", "", "", "", ""]
 
@@ -87,74 +95,118 @@ def faz_jogada():
         quadrante[8] = "X" if jogador_atual == personagem_x else "O"
 
 def descobrir_ganhador():
-
-    if quadrante[0] == "" or quadrante[1] == "" or quadrante[3] == "" or quadrante[4] == "" or quadrante[5] == "" or quadrante[6] == "" or quadrante[7] == "" or quadrante[8] == "":
-        print("quadrante vazio")
- 
-    # lógica 1 (ganhadores horizontais)
+    status = False
     
-    elif quadrante[0] == quadrante[1] and quadrante[1] == quadrante[2]:
+    if quadrante[0] == quadrante[1] == quadrante[2] != "":
         if quadrante[0] == "X":
-            print(x_ganhou)
+            pygame.draw.line(screen, "white", (50, 100), (550, 100), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+            status = True
         else:
-            print(o_ganhou)
+            pygame.draw.line(screen, "white", (50, 100), (550, 100), 10)
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
 
-    elif quadrante[3] == quadrante[4] and quadrante[4] == quadrante[5]:
+    elif quadrante[3] == quadrante[4] == quadrante[5] != "":
         if quadrante[3] == "X":
-            print(x_ganhou)
+            pygame.draw.line(screen, "white", (50, 300), (550, 300), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+            status = True
         else:
-            print(o_ganhou)
+            pygame.draw.line(screen, "white", (50, 300), (550, 300), 10)
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
 
-    elif quadrante[6] == quadrante[7] and quadrante[7] == quadrante[8]:
+    elif quadrante[6] == quadrante[7] == quadrante[8] != "":
         if quadrante[6] == "X":
-            print(x_ganhou)
+            pygame.draw.line(screen, "white", (50, 500), (550, 500), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+
+            status = True
         else:
-            print(o_ganhou)
+            pygame.draw.line(screen, "white", (50, 500), (550, 500), 10)
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
 
-    # lógica 2 (ganhadores laterais)
+    # lógica 2 (ganhadores verticais)
 
-    elif quadrante[0] == quadrante[3] and quadrante[3] == quadrante[6]:
+    elif quadrante[0] == quadrante[3] == quadrante[6] != "":
         if quadrante[0] == "X":
-            print(x_ganhou)
+            pygame.draw.line(screen, "white", (100, 50), (100, 550), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+            status = True
         else:
-            print(o_ganhou)
+            pygame.draw.line(screen, "white", (100, 50), (100, 550), 10)
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
     
-    elif quadrante[1] == quadrante[4] and quadrante[4] == quadrante[7]:
+    elif quadrante[1] == quadrante[4] == quadrante[7] != "":
         if quadrante[1] == "X":
-            print(x_ganhou)
+            pygame.draw.line(screen, "white", (300, 50), (300, 550), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+            status = True
         else:
-            print(o_ganhou)
-    elif quadrante[2] == quadrante[5] and quadrante[5] == quadrante[8]:
+            pygame.draw.line(screen, "white", (300, 50), (300, 550), 10)
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
+
+    elif quadrante[2] == quadrante[5] == quadrante[8] != "":
         if quadrante[2] == "X":
-            print(x_ganhou)
+            pygame.draw.line(screen, "white", (500, 50), (500, 550), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+            status = True
         else:
-            print(o_ganhou)
+            pygame.draw.line(screen, "white", (500, 50), (500, 550), 10)
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
 
+    # lógica 3 (ganhadores diagonais)
 
+    elif quadrante[0] == quadrante[4] == quadrante[8] != "":
+        if quadrante[0] == "X":
+            pygame.draw.line(screen, "white", (50, 50), (550, 550), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+            status = True
+        else:
+            pygame.draw.line(screen, "white", (50, 50), (550, 550), 10)
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
+    elif quadrante[2] == quadrante[4] == quadrante[6] != "":
+        if quadrante[2] == "X":
+            pygame.draw.line(screen, "white", (550, 50), (50, 550), 10)
+            screen.blit(ganhador_x_tela, (30, 190))
+            status = True
+        else:
+            screen.blit(ganhador_o_tela, (30, 190))
+            status = True
+    # return status
 
 while running:
-    # poll for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print("Clicou")
             posicao = pygame.mouse.get_pos()
-            print("Eixo X", posicao[0]) # Eixo X
-            print("Eixo Y", posicao[1]) # Eixo Y
+            print(rodadas)
             rodadas = rodadas + 1
+            tabuleiro(espessura, cor_tabuleiro)
             faz_jogada()
             descobrir_ganhador()
+            if (descobrir_ganhador()):
+                rodadas = 9
+
             if rodadas >= 10:
                 screen.fill("black")
                 tabuleiro_desenhado = False
                 rodadas = 0
                 coordenada_x = 0
                 coordenada_y = 0
+                quadrante = ["", "", "", "", "", "", "", "", ""]
+                cor_tabuleiro = random.choice(cores)
                 tabuleiro(espessura, cor_tabuleiro)
 
     if tabuleiro_desenhado == False:
-        tabuleiro(espessura, cor_tabuleiro)  
+        tabuleiro(espessura, cor_tabuleiro)
         tabuleiro_desenhado = True
 
     pygame.display.flip()
