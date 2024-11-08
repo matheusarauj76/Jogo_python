@@ -177,6 +177,7 @@ def descobrir_ganhador():
             screen.blit(ganhador_x_tela, (30, 190))
             status = True
         else:
+            pygame.draw.line(screen, "white", (550, 50), (50, 550), 10)
             screen.blit(ganhador_o_tela, (30, 190))
             status = True
     return status
